@@ -24,9 +24,9 @@ Orientações:
 
 Exemplo de Massa de dados:
 
+```txt
 Janela de execução: 2019-11-10 09:00:00 até 2019-11-11 12:00:00
 
-```txt
 [
     {
         "ID": 1,
@@ -58,4 +58,4 @@ Output esperado:
 
 ## Tecnologia(s) e requisitos:
 
-Liguagem de Programação: Python (versão 3.9)
+Liguagem de Programação: Python (versão 3.x)
