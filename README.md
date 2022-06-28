@@ -65,5 +65,6 @@ Framework: Flask
 ```txt
 cd desafio2
 virtualenv venv
+. venv/bin/activate
 pip install Flask
 ```
