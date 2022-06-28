@@ -57,5 +57,13 @@ Output esperado:
 ```
 
 ## Tecnologia(s) e requisitos:
-
 Liguagem de Programação: Python (versão 3.x)
+
+## Ambiente DEV
+Framework: Flask
+
+```txt
+cd desafio2
+virtualenv venv
+pip install Flask
+```

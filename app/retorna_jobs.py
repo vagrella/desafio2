@@ -10,7 +10,6 @@ test_ler_jobs()
 '''
 
 from datetime import date as dt
-import Job as job
 
 data_atual = dt.today()
 
@@ -18,7 +17,7 @@ data_atual = dt.today()
 Ler o arquivo com os Jobs
 '''
 def ler_jobs():
-    return job
+    return Job
 
 
 
