@@ -1,5 +1,6 @@
 # desafio2
 
+## Descrição:
 Dado um array de "jobs" para execução, no qual cada posição possui um objeto com os seguintes atributos:
 
 1) ID: Identificação do Job;
@@ -47,8 +48,6 @@ Janela de execução: 2019-11-10 09:00:00 até 2019-11-11 12:00:00
     },
 ]
 ```
-
-
 Output esperado:
 ```txt
 [
@@ -56,3 +55,7 @@ Output esperado:
     [2]
 ]
 ```
+
+## Tecnologia(s) e requisitos:
+
+Liguagem de Programação: Python (versão 3.9)
