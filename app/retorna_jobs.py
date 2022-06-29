@@ -6,10 +6,18 @@ Testes automatizados
 doctests:
 
 >>> criar_job()
-Arquivo criado com sucesso
+Arquivo Json com massa de dados criado com sucesso!
 
 >>> ler_jobs()
-True
+Lendo Jobs...
+Dados lidos:
+[{'ID': 1, 'Descrição': 'Importação de arquivos de fundos', 'Data Máxima de conclusão': '2019-11-10 12:00:00', 'Tempo estimado': '2 horas'}, {'ID': 2, 'Descrição': 'Importação de dados da Base Legada', 'Data Máxima de conclusão': '2019-11-11 12:00:00', 'Tempo estimado': '4 horas'}, {'ID': 3, 'Descrição': 'Importação de dados de integração', 'Data Máxima de conclusão': '2019-11-11 08:00:00', 'Tempo estimado': '6 horas'}]
+
+
+>>> listar_jobs()
+Listando Jobs:
+Lendo Jobs...
+Dados lidos:
 
 '''
 
@@ -46,16 +54,21 @@ def criar_job():
     ]
     with open('./data/jobs.json', 'w') as arquivo:
         json.dump(j, arquivo)
-    print('Arquivo criado com sucesso')
+    print('Arquivo Json com massa de dados criado com sucesso!')
 
 '''
 Ler o arquivo com os Jobs
 '''
 def ler_jobs():
+    print('Lendo Jobs...')
     with open('./data/jobs.json') as arquivo:
         jobs = json.load(arquivo)
-    return True
+    print('Dados lidos:')
+    return jobs
 
+def listar_jobs():
+    print('Listando Jobs:')
+    lista_jobs = ler_jobs()
 
 
 if __name__ == "__main__":
@@ -63,6 +76,6 @@ if __name__ == "__main__":
     import doctest
     doctest.testmod()
 
-    # Realizar a leitura do arquivo
-    #criar_job()
-    #ler_jobs()
+    # Realizar etapas
+    criar_job()
+    listar_jobs()

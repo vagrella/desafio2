@@ -1,5 +1,9 @@
 # desafio2
 
+Para rodar o programa em ambientes:
+Linux: execute o programa (Shell Script) run.sh
+Windows: execute o programa run.bat
+
 ## Descrição:
 Dado um array de "jobs" para execução, no qual cada posição possui um objeto com os seguintes atributos:
 
@@ -57,7 +61,9 @@ Output esperado:
 ```
 
 ## Tecnologia(s) e requisitos:
+Sistema Operacional: Linux (Preferêncial)
 Liguagem de Programação: Python (versão 3.x)
+Pacotes e Libs Python: json, pandas e numpy
 
 ## Ambiente DEV
 Framework: Flask
