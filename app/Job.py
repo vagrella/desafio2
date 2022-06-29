@@ -1,11 +1,11 @@
 #Vornei: Classe de modelagem Job
 
 #Nomes dos Campos
-class Job:
-    cl_id = 'ID'
-    cl_descricao = 'Descrição'
-    cl_data_maxima_conclusao = 'Data Máxima de conclusão'
-    cl_tempo_estimado = 'Tempo estimado'
+class Campo:
+    id = 'ID'
+    descricao = 'Descrição'
+    data_maxima_conclusao = 'Data Máxima de conclusão'
+    tempo_estimado = 'Tempo estimado'
 
 #Informações
 class Info:
