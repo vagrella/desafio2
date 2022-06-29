@@ -4,6 +4,8 @@ Para rodar o programa em ambientes:
 Linux: execute o programa (Shell Script) run.sh
 Windows: execute o programa run.bat
 
+Para rodar o programa
+
 ## Descrição:
 Dado um array de "jobs" para execução, no qual cada posição possui um objeto com os seguintes atributos:
 

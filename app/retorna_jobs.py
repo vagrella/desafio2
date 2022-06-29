@@ -20,13 +20,10 @@ Lendo Jobs...
 Dados lidos:
 
 '''
-
-from datetime import date as dt
+import config
 import Job as job
 import json
 import pandas as pd
-
-data_atual = dt.today()
 
 '''
 Criar o arquivo com o Job
@@ -52,16 +49,19 @@ def criar_job():
             job.Campo.tempo_estimado: '6 horas',
         }
     ]
-    with open('./data/jobs.json', 'w') as arquivo:
-        json.dump(j, arquivo)
+    #with open('./data/jobs.json', 'w') as arquivo:
+    with open(config.arq_jobs, 'w') as arquivo:
+        json.dump(j, arquivo, indent=config.indenta)
     print('Arquivo Json com massa de dados criado com sucesso!')
 
 '''
-Ler o arquivo com os Jobs
+Ler o arquivo com os Jobs retornando o dicionário de jobs do arquivo Json
 '''
 def ler_jobs():
     print('Lendo Jobs...')
-    with open('./data/jobs.json') as arquivo:
+    #with open('./data/jobs.json') as arquivo:
+    with open(config.arq_jobs) as arquivo:
+        #dicionario de dados contendo os jobs
         jobs = json.load(arquivo)
     print('Dados lidos:')
     return jobs
