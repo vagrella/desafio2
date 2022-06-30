@@ -19,9 +19,6 @@ Listando Jobs:
 Lendo Jobs...
 Dados lidos:
 [
-1,
-2,
-3,
 ]
 
 
@@ -101,12 +98,17 @@ def listar_jobs():
             #lista_jobs_max_8h = pd.json_normalize(janela, record_path=[Job.campo.lista])
             lista_jobs_max_8h = janela[Job.campo.lista]
             print('[')
+            conta_job = 0;
             for linha_job in lista_jobs_max_8h:
                 # 3) Deve ser respeitada a data máxima de conclusão do Job;
-                print(linha_job)
-                #print(str(linha_job[Job.campo.id])+',')
-
-            print(']')
+                data_maxima_colnclusao = config.dt.datetime.strptime(linha_job[Job.campo.data_maxima_conclusao]).date()
+                if (data_maxima_colnclusao <= config.data_atual):
+                    if (conta_job < 0):
+                        print(', ')
+                    print(linha_job)
+                    #print(str(linha_job[Job.campo.id]))
+                    conta_job = conta_job + 1
+            print('], ')
     print(']')
 
 
