@@ -1,8 +1,10 @@
 # desafio2
 
+## Executar Programa:
 Para rodar o programa em ambientes:
-Linux: execute o programa (Shell Script) run.sh
-Windows: execute o programa run.bat
+
+1) Linux: execute o programa (Shell Script) run.sh
+2) Windows: execute o programa run.bat
 
 Para rodar o programa
 
@@ -65,14 +67,18 @@ Output esperado:
 ## Tecnologia(s) e requisitos:
 Sistema Operacional: Linux (Preferêncial)
 Liguagem de Programação: Python (versão 3.x)
-Pacotes e Libs Python: json, pandas e numpy
+Pacotes e Libs Python: json. pandas, virtualenv
 
 ## Ambiente DEV
-Framework: Flask
+
+Instalar o virtualenv:
+```txt
+pip install virtualenv
+```
+
 
 ```txt
 cd desafio2
 virtualenv venv
 . venv/bin/activate
-pip install Flask
 ```
