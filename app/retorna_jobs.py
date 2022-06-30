@@ -122,26 +122,6 @@ def listar_jobs(arq_jobs = ''):
             print('], ')
     print(']')
 
-'''
-Realiza a comparacao entre duas datas atraves da comparação:
-==, <=, =>, <, >
-'''
-def comparar_data_hora(periodo_1, periodo_2, comparacao='=='):
-    compara_ok = False
-
-    periodo_1 = periodo_1.replace('-', '').replace('/', '').replace(' ', '')
-    periodo_2 = periodo_2.replace('-', '').replace('/', '').replace(' ', '')
-
-    if comparacao is '==' and (periodo_1 == periodo_2):
-            compara_ok = True
-    elif comparacao is '>=' and (periodo_1 >= periodo_2):
-            compara_ok = True
-    elif comparacao is '<=' and (periodo_1 <= periodo_2):
-            compara_ok = True
-
-    return compara_ok
-
-
 if __name__ == "__main__":
     # Para Executar os Testes automatizados
     import doctest
