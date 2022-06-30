@@ -27,34 +27,35 @@ Dados lidos:
 
 '''
 import config
-import Job as job
+import model.Job as Job
+
 import json
-import pandas as pd
+#import pandas as pd
 
 '''
 Criar o arquivo com o Job
 '''
 def criar_job():
     j = [{
-        job.Campo.janela_execucao: '2019-11-10 09:00:00 até 2019-11-11 12:00:00',
-        job.Campo.lista: [
+        Job.campo.janela_execucao: '2019-11-10 09:00:00 até 2019-11-11 12:00:00',
+        Job.campo.lista: [
             {
-                job.Campo.id: 1,
-                job.Campo.descricao: "Importação de arquivos de fundos",
-                job.Campo.data_maxima_conclusao: '2019-11-10 12:00:00',
-                job.Campo.tempo_estimado: '2 horas',
+                Job.campo.id: 1,
+                Job.campo.descricao: "Importação de arquivos de fundos",
+                Job.campo.data_maxima_conclusao: '2019-11-10 12:00:00',
+                Job.campo.tempo_estimado: '2 horas',
             },
             {
-                job.Campo.id: 2,
-                job.Campo.descricao: "Importação de dados da Base Legada",
-                job.Campo.data_maxima_conclusao: '2019-11-11 12:00:00',
-                job.Campo.tempo_estimado: '4 horas',
+                Job.campo.id: 2,
+                Job.campo.descricao: "Importação de dados da Base Legada",
+                Job.campo.data_maxima_conclusao: '2019-11-11 12:00:00',
+                Job.campo.tempo_estimado: '4 horas',
             },
             {
-                job.Campo.id: 3,
-                job.Campo.descricao: "Importação de dados de integração",
-                job.Campo.data_maxima_conclusao: '2019-11-11 08:00:00',
-                job.Campo.tempo_estimado: '6 horas',
+                Job.campo.id: 3,
+                Job.campo.descricao: "Importação de dados de integração",
+                Job.campo.data_maxima_conclusao: '2019-11-11 08:00:00',
+                Job.campo.tempo_estimado: '6 horas',
             }
         ],
     }]
@@ -76,29 +77,36 @@ def ler_jobs():
     return jobs
 
 '''
-Listar os IDs dos Jobs
+Listar os IDs dos Jobs:
+1) Cada array do conjunto representa uma lista de Jobs a serem executados em sequência;
+2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
+3) Deve ser respeitada a data máxima de conclusão do Job;
+4) Todos os Jobs devem ser executados dentro da janela de execução (data início e fim).
 '''
 def listar_jobs():
     print('Listando Jobs:')
     # 1) Cada array do conjunto representa uma lista de Jobs a serem executados em sequência;
-    lista_jobs = ler_jobs()
+    dicionario_janelas = ler_jobs()
     print('[')
+    # Janelas de execuções
+    for janela in dicionario_janelas:
+        # 4) Todos os Jobs devem ser executados dentro da janela de execução (data início e fim).
+        janela_execucao = janela[Job.campo.janela_execucao].split(' até ', 1)
+        data_inicio = config.dt.datetime.strptime(janela_execucao[0], config.arg_data_hora).date()
+        data_fim = config.dt.datetime.strptime(janela_execucao[1], config.arg_data_hora).date()
 
-    # Maneira Inicial laço
-    for linha in lista_jobs:
-        #print(linha)
-        for linha_job in linha[job.Campo.lista]:
-            print(str(linha_job[job.Campo.id])+',')
+        if data_inicio <= config.data_atual <= data_fim:
+            # 2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
+            # Usando json_normalize
+            #lista_jobs_max_8h = pd.json_normalize(janela, record_path=[Job.campo.lista])
+            lista_jobs_max_8h = janela[Job.campo.lista]
+            print('[')
+            for linha_job in lista_jobs_max_8h:
+                # 3) Deve ser respeitada a data máxima de conclusão do Job;
+                print(linha_job)
+                #print(str(linha_job[Job.campo.id])+',')
 
-    # Esta com um erro: ValueError: Invalid file path or buffer object type: <class 'list'>
-    # Utilizar o pandas, porém não achei a melhor maneira de orientação para o tipo de arquivo Json inicialmente
-    # usando o read_json em que  o pandas pode ler alguns tipos
-    # json padrões orientado por: 'records', 'split', 'columns', 'values'
-    #pd.read_json(lista_jobs, orient='records')
-
-    #Usando json_normalize
-    pd.json_normalize(lista_jobs, record_path=[job.Campo.lista])
-
+            print(']')
     print(']')
 
 
