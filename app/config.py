@@ -7,6 +7,7 @@ import datetime as dt
 
 arg_data_hora = '%Y-%m-%d %H:%M:%S'
 data_atual = dt.date.today()
+data_hora_atual = dt.datetime.now()
 
 dir_data = './data/'
 #arq_jobs = './data/jobs.json'
