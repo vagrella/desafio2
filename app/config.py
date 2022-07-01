@@ -14,3 +14,4 @@ dir_data = './data/'
 arq_jobs = os.path.join(dir_data, 'jobs.json')
 arq_jobs_teste = os.path.join(dir_data, 'jobs_teste.json')
 indenta = 2
+max_tempo_estimado = 8

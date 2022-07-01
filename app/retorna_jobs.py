@@ -53,6 +53,12 @@ def criar_job(j = [], arq_jobs = ''):
                     Job.campo.descricao: "Importação de dados de integração",
                     Job.campo.data_maxima_conclusao: '2019-11-11 08:00:00',
                     Job.campo.tempo_estimado: '6 horas',
+                },
+                {
+                    Job.campo.id: 4,
+                    Job.campo.descricao: "Importação de dados de integração",
+                    Job.campo.data_maxima_conclusao: '2022-12-30 08:00:00',
+                    Job.campo.tempo_estimado: '9 horas',
                 }
             ],
         }]
@@ -106,7 +112,7 @@ def listar_jobs(arq_jobs):
             # TODO máximo de 8 h:
             # Usando json_normalize para
             #lista_jobs_max_8h = pd.json_normalize(janela, record_path=[Job.campo.lista])
-            lista_jobs_max_8h = janela[Job.campo.lista]
+            lista_jobs_max_8h = limitar_jobs_max_8h(janela[Job.campo.lista])
             print('[')
             conta_job = 0;
             for linha_job in lista_jobs_max_8h:
@@ -121,6 +127,16 @@ def listar_jobs(arq_jobs):
             print('], ')
     print(']')
 
+def limitar_jobs_max_8h(lista_jobs):
+    i = 0
+    for job in lista_jobs:
+        tempo_estimado = int(job[Job.campo.tempo_estimado].replace(' horas', ''))
+        if (tempo_estimado > config.max_tempo_estimado):
+            del lista_jobs[i]
+        i = i + 1
+
+    return lista_jobs
+
 if __name__ == "__main__":
     # Para Executar os Testes automatizados
     #import doctest
@@ -133,6 +149,7 @@ if __name__ == "__main__":
     #dic_jobs[0][Job.campo.janela_execucao] = str(config.data_atual) + ' 00:00:00 até ' + str(data_futuro) + ' 00:00:00'
 
     # Alterar o período do indice 1 [ID: 2]
+    #print(dic_jobs[0][Job.campo.lista][1][Job.campo.id])
     #dic_jobs[0][Job.campo.lista][1][Job.campo.data_maxima_conclusao] = str(config.data_atual) + ' 23:00:00'
 
     # Salvar alterações no arquivo
