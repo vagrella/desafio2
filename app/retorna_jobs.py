@@ -104,7 +104,7 @@ def listar_jobs(arq_jobs):
         if data_inicio <= config.data_hora_atual <= data_fim:
             # 2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
             # TODO máximo de 8 h:
-            #  Usando json_normalize para
+            # Usando json_normalize para
             #lista_jobs_max_8h = pd.json_normalize(janela, record_path=[Job.campo.lista])
             lista_jobs_max_8h = janela[Job.campo.lista]
             print('[')
@@ -125,6 +125,18 @@ if __name__ == "__main__":
     # Para Executar os Testes automatizados
     #import doctest
     #doctest.testmod()
+
+    # Preparar: alterar o json para data atual
+    #dic_jobs = ler_jobs(config.arq_jobs)
+    # Colocar a data fim da Janela para 5 dias
+    #data_futuro = config.data_atual + config.dt.timedelta(days=5)
+    #dic_jobs[0][Job.campo.janela_execucao] = str(config.data_atual) + ' 00:00:00 até ' + str(data_futuro) + ' 00:00:00'
+
+    # Alterar o período do indice 1 [ID: 2]
+    #dic_jobs[0][Job.campo.lista][1][Job.campo.data_maxima_conclusao] = str(config.data_atual) + ' 23:00:00'
+
+    # Salvar alterações no arquivo
+    #criar_job(dic_jobs, arq_jobs=config.arq_jobs)
 
     # Rodar a aplicação
     listar_jobs(arq_jobs=config.arq_jobs)
