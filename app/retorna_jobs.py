@@ -15,7 +15,30 @@ O Caminho do arquivo deve ser do tipo string!
 >>> listar_jobs(cg.arq_jobs_teste)
 Listando Jobs:
 Lendo Jobs...
+[]
+
+>>> # Preparar: alterar o json para data atual
+>>> dic_jobs = ler_jobs(cg.arq_jobs)
+Lendo Jobs...
+>>> # Colocar a data fim da Janela para 5 dias
+>>> data_futuro = cg.data_atual + cg.dt.timedelta(days=5)
+>>> dic_jobs[0][Job.campo.janela_execucao] = str(cg.data_atual) + ' 00:00:00 até ' + str(data_futuro) + ' 00:00:00'
+>>> # Alterar o período do indice 0 [ID: 1]
+>>> print(dic_jobs[0][Job.campo.lista][0][Job.campo.id])
+1
+>>> dic_jobs[0][Job.campo.lista][0][Job.campo.data_maxima_conclusao] = str(cg.data_atual) + ' 23:00:00'
+>>> # Alterar o período do indice 2 [ID: 3]
+>>> print(dic_jobs[0][Job.campo.lista][2][Job.campo.id])
+3
+>>> dic_jobs[0][Job.campo.lista][2][Job.campo.data_maxima_conclusao] = str(cg.data_atual) + ' 23:00:00'
+>>> # Salvar alterações no arquivo
+>>> criar_job(dic_jobs, arq_jobs=cg.arq_jobs)
+Arquivo Json com massa de dados salvo com sucesso!
+>>> listar_jobs(cg.arq_jobs)
+Listando Jobs:
+Lendo Jobs...
 [
+  [ 1, 3],
 ]
 
 '''
@@ -23,7 +46,6 @@ import config as config
 import model.Job as Job
 
 import json
-#import pandas as pd
 
 '''
 Criar o arquivo com o Job
@@ -99,7 +121,7 @@ def listar_jobs(arq_jobs):
     if len(dic_janelas) == 0:
         return None
 
-    print('[')
+    output_esperado = '['
     # Janelas de execuções
     for janela in dic_janelas:
         # 4) Todos os Jobs devem ser executados dentro da janela de execução (data início e fim).
@@ -109,24 +131,32 @@ def listar_jobs(arq_jobs):
 
         if data_inicio <= config.data_hora_atual <= data_fim:
             # 2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
-            # TODO máximo de 8 h:
-            # Usando json_normalize para
-            #lista_jobs_max_8h = pd.json_normalize(janela, record_path=[Job.campo.lista])
             lista_jobs_max_8h = limitar_jobs_max_8h(janela[Job.campo.lista])
-            print('[')
+            output_esperado = output_esperado + config.enter + '  [ '
             conta_job = 0;
             for linha_job in lista_jobs_max_8h:
                 # 3) Deve ser respeitada a data máxima de conclusão do Job;
                 data_maxima_conclusao = config.dt.datetime.strptime(linha_job[Job.campo.data_maxima_conclusao], config.arg_data_hora)
                 if (config.data_hora_atual <= data_maxima_conclusao):
-                    if (conta_job < 0):
-                        print(', ')
+                    if (conta_job > 0):
+                        output_esperado = output_esperado + ', '
 
-                    print(str(linha_job[Job.campo.id]))
+                    output_esperado = output_esperado + str(linha_job[Job.campo.id])
                     conta_job = conta_job + 1
-            print('], ')
-    print(']')
+            output_esperado = output_esperado + '], ' + config.enter
+    output_esperado = output_esperado + ']'
+    print(output_esperado)
 
+'''
+Remove os jobs com mais de 8h da lista, requisito:
+2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
+
+lista_jobs: deve conter a "lista" (parametro: Job.campo.lista), contida no dicionário de janelas de execussões,
+parametro janela_execussao[indice], do json, exemplo do parâmetro de entrada: 
+1 - dic_janela[0][Job.campo.janela_execucao][0][Job.campo.lista
+2 - janela_execusao[0][Job.campo.lista] (caso de laço com 1 nível)
+3 - janela[Job.campo.lista] (caso de laço com 2 níveis)
+'''
 def limitar_jobs_max_8h(lista_jobs):
     i = 0
     for job in lista_jobs:
@@ -141,19 +171,6 @@ if __name__ == "__main__":
     # Para Executar os Testes automatizados
     #import doctest
     #doctest.testmod()
-
-    # Preparar: alterar o json para data atual
-    #dic_jobs = ler_jobs(config.arq_jobs)
-    # Colocar a data fim da Janela para 5 dias
-    #data_futuro = config.data_atual + config.dt.timedelta(days=5)
-    #dic_jobs[0][Job.campo.janela_execucao] = str(config.data_atual) + ' 00:00:00 até ' + str(data_futuro) + ' 00:00:00'
-
-    # Alterar o período do indice 1 [ID: 2]
-    #print(dic_jobs[0][Job.campo.lista][1][Job.campo.id])
-    #dic_jobs[0][Job.campo.lista][1][Job.campo.data_maxima_conclusao] = str(config.data_atual) + ' 23:00:00'
-
-    # Salvar alterações no arquivo
-    #criar_job(dic_jobs, arq_jobs=config.arq_jobs)
 
     # Rodar a aplicação
     listar_jobs(arq_jobs=config.arq_jobs)
