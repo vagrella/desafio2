@@ -26,6 +26,7 @@ class TestRetornaJobs(unittest.TestCase):
         with self.assertRaises(AttributeError):
             rj.listar_jobs(None)
 
+    # 1) Cada array do conjunto representa uma lista de Jobs a serem executados em sequência;
     def test_jobs_ok(self):
         self.assertEqual(1, self.jobs[0][rj.Job.campo.lista][0][rj.Job.campo.id])
         self.assertEqual(2, self.jobs[0][rj.Job.campo.lista][1][rj.Job.campo.id])
@@ -38,6 +39,10 @@ class TestRetornaJobs(unittest.TestCase):
     # 3) Deve ser respeitada a jobs máxima de conclusão do Job;
     def test_listar_jobs_ok(self):
         self.assertEqual("[\n  [ 2],\n]", rj.listar_jobs(arq_jobs=rj.config.arq_jobs, retorna=True))
+
+    #4) Todos os Jobs devem ser executados dentro da janela de execução (jobs início e fim).
+    def test_janela_ok(self):
+        self.assertEqual('[\n]', rj.listar_jobs(arq_jobs=rj.config.arq_jobs_teste, retorna=True))
 
 if __name__ == '__main__':
     unittest.main()

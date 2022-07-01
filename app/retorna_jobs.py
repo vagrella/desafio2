@@ -15,7 +15,8 @@ O Caminho do arquivo deve ser do tipo string!
 >>> listar_jobs(cg.arq_jobs_teste)
 Listando Jobs:
 Lendo Jobs...
-[]
+[
+]
 
 >>> # Preparar: alterar o json para jobs atual
 >>> dic_jobs = ler_jobs(cg.arq_jobs)
@@ -151,8 +152,8 @@ def listar_jobs(arq_jobs, retorna=False):
                     output_esperado = output_esperado + str(linha_job[Job.campo.id])
                     conta_job = conta_job + 1
 
-            output_esperado = output_esperado + '],' + config.enter
-    output_esperado = output_esperado + ']'
+            output_esperado = output_esperado + '],'
+    output_esperado = output_esperado + config.enter + ']'
 
     if (retorna):
         return output_esperado
@@ -190,4 +191,5 @@ if __name__ == "__main__":
     print('+++++++++++++++++++++++++++++++++++++++++++++')
 
     # Rodar a aplicação
-    listar_jobs(arq_jobs=config.arq_jobs)
+    #listar_jobs(arq_jobs=config.arq_jobs)
+    listar_jobs('data/jobs_2.json')
