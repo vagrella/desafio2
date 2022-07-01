@@ -17,10 +17,10 @@ Listando Jobs:
 Lendo Jobs...
 []
 
->>> # Preparar: alterar o json para data atual
+>>> # Preparar: alterar o json para jobs atual
 >>> dic_jobs = ler_jobs(cg.arq_jobs)
 Lendo Jobs...
->>> # Colocar a data fim da Janela para 5 dias
+>>> # Colocar a jobs fim da Janela para 5 dias
 >>> data_futuro = cg.data_atual + cg.dt.timedelta(days=5)
 >>> dic_jobs[0][Job.campo.janela_execucao] = str(cg.data_atual) + ' 00:00:00 até ' + str(data_futuro) + ' 00:00:00'
 >>> # Alterar o período do indice 0 [ID: 1]
@@ -106,8 +106,8 @@ def ler_jobs(arq_jobs):
 Listar os IDs dos Jobs:
 1) Cada array do conjunto representa uma lista de Jobs a serem executados em sequência;
 2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
-3) Deve ser respeitada a data máxima de conclusão do Job;
-4) Todos os Jobs devem ser executados dentro da janela de execução (data início e fim).
+3) Deve ser respeitada a jobs máxima de conclusão do Job;
+4) Todos os Jobs devem ser executados dentro da janela de execução (jobs início e fim).
 '''
 def listar_jobs(arq_jobs):
 
@@ -124,7 +124,7 @@ def listar_jobs(arq_jobs):
     output_esperado = '['
     # Janelas de execuções
     for janela in dic_janelas:
-        # 4) Todos os Jobs devem ser executados dentro da janela de execução (data início e fim).
+        # 4) Todos os Jobs devem ser executados dentro da janela de execução (jobs início e fim).
         janela_execucao = janela[Job.campo.janela_execucao].split(' até ', 1)
         data_inicio = config.dt.datetime.strptime(janela_execucao[0], config.arg_data_hora)
         data_fim = config.dt.datetime.strptime(janela_execucao[1], config.arg_data_hora)
@@ -135,7 +135,7 @@ def listar_jobs(arq_jobs):
             output_esperado = output_esperado + config.enter + '  [ '
             conta_job = 0;
             for linha_job in lista_jobs_max_8h:
-                # 3) Deve ser respeitada a data máxima de conclusão do Job;
+                # 3) Deve ser respeitada a jobs máxima de conclusão do Job;
                 data_maxima_conclusao = config.dt.datetime.strptime(linha_job[Job.campo.data_maxima_conclusao], config.arg_data_hora)
                 if (config.data_hora_atual <= data_maxima_conclusao):
                     if (conta_job > 0):

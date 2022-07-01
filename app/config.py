@@ -11,7 +11,7 @@ data_atual = dt.date.today()
 data_hora_atual = dt.datetime.now()
 
 dir_data = './data/'
-#arq_jobs = './data/jobs.json'
+#arq_jobs = './jobs/jobs.json'
 arq_jobs = os.path.join(dir_data, 'jobs.json')
 arq_jobs_teste = os.path.join(dir_data, 'jobs.json')
 indenta = 2
