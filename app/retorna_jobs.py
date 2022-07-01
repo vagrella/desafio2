@@ -104,12 +104,16 @@ def ler_jobs(arq_jobs):
 
 '''
 Listar os IDs dos Jobs:
+
+arq_jobs: caminho do arquivo de jobs a ser lido
+retorna: True or False
+
 1) Cada array do conjunto representa uma lista de Jobs a serem executados em sequência;
 2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
 3) Deve ser respeitada a jobs máxima de conclusão do Job;
 4) Todos os Jobs devem ser executados dentro da janela de execução (jobs início e fim).
 '''
-def listar_jobs(arq_jobs):
+def listar_jobs(arq_jobs, retorna=False):
 
     if arq_jobs is None or not isinstance(arq_jobs, str):
         raise AttributeError('O Caminho do arquivo deve ser do tipo string!')
@@ -134,18 +138,25 @@ def listar_jobs(arq_jobs):
             lista_jobs_max_8h = limitar_jobs_max_8h(janela[Job.campo.lista])
             output_esperado = output_esperado + config.enter + '  [ '
             conta_job = 0;
+
             for linha_job in lista_jobs_max_8h:
                 # 3) Deve ser respeitada a jobs máxima de conclusão do Job;
                 data_maxima_conclusao = config.dt.datetime.strptime(linha_job[Job.campo.data_maxima_conclusao], config.arg_data_hora)
+
                 if (config.data_hora_atual <= data_maxima_conclusao):
                     if (conta_job > 0):
                         output_esperado = output_esperado + ', '
 
                     output_esperado = output_esperado + str(linha_job[Job.campo.id])
                     conta_job = conta_job + 1
+
             output_esperado = output_esperado + '],' + config.enter
     output_esperado = output_esperado + ']'
-    print(output_esperado)
+
+    if (retorna):
+        return output_esperado
+    else:
+        print(output_esperado)
 
 '''
 Remove os jobs com mais de 8h da lista, requisito:
