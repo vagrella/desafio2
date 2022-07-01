@@ -31,6 +31,11 @@ class TestRetornaJobs(unittest.TestCase):
         self.assertEqual(2, self.jobs[0][rj.Job.campo.lista][1][rj.Job.campo.id])
         self.assertEqual(3, self.jobs[0][rj.Job.campo.lista][2][rj.Job.campo.id])
 
+    # 2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
+    def test_limitar_max_8h(self):
+        self.assertNotEqual("[\n  [ 2, 4],\n]", rj.listar_jobs(arq_jobs=rj.config.arq_jobs, retorna=True))
+
+    # 3) Deve ser respeitada a jobs máxima de conclusão do Job;
     def test_listar_jobs_ok(self):
         self.assertEqual("[\n  [ 2],\n]", rj.listar_jobs(arq_jobs=rj.config.arq_jobs, retorna=True))
 

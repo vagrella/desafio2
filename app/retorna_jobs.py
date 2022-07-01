@@ -135,14 +135,15 @@ def listar_jobs(arq_jobs, retorna=False):
 
         if data_inicio <= config.data_hora_atual <= data_fim:
             # 2) Cada array deve conter jobs que sejam executados em, no máximo, 8h;
+            #lista_jobs_max_8h = janela[Job.campo.lista]
             lista_jobs_max_8h = limitar_jobs_max_8h(janela[Job.campo.lista])
             output_esperado = output_esperado + config.enter + '  [ '
             conta_job = 0;
 
             for linha_job in lista_jobs_max_8h:
-                # 3) Deve ser respeitada a jobs máxima de conclusão do Job;
-                data_maxima_conclusao = config.dt.datetime.strptime(linha_job[Job.campo.data_maxima_conclusao], config.arg_data_hora)
 
+                data_maxima_conclusao = config.dt.datetime.strptime(linha_job[Job.campo.data_maxima_conclusao], config.arg_data_hora)
+                # 3) Deve ser respeitada a jobs máxima de conclusão do Job;
                 if (config.data_hora_atual <= data_maxima_conclusao):
                     if (conta_job > 0):
                         output_esperado = output_esperado + ', '
