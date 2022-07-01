@@ -6,7 +6,7 @@ import app.retorna_jobs as rj
 class TestRetornaJobs(unittest.TestCase):
 
     def setUp(self):
-        rj.criar_job(rj.config.arq_jobs)
+        rj.criar_job(arq_jobs=rj.config.arq_jobs)
         # Preparar: alterar o json para jobs atual
         dic_jobs = rj.ler_jobs(rj.config.arq_jobs)
         # Colocar a jobs fim da Janela para 5 dias
