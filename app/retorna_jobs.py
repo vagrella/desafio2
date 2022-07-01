@@ -23,8 +23,8 @@ Dados lidos:
 
 
 '''
-import config
-import model.Job as Job
+import app.config as config
+import app.model.Job as Job
 
 import json
 #import pandas as pd
