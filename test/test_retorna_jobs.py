@@ -34,7 +34,7 @@ class TestRetornaJobs(unittest.TestCase):
         self.assertEqual(3, self.jobs[0][Job.campo.lista][2][Job.campo.id])
 
     def test_listar_jobs_ok(self):
-        self.assertEqual('[[2],]', rj.listar_jobs(arq_jobs=config.arq_jobs))
+        self.assertEqual("[\n[2],\n]", rj.listar_jobs(arq_jobs=config.arq_jobs))
 
     def test_limite_max_8h(self):
         self.jobs = rj.listar_jobs(config.arq_jobs)

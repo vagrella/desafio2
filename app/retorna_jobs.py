@@ -4,6 +4,7 @@ Vornei (@vagrella): 28/06/2022 - Programa Python 3.9 que ira retornar um conjunt
 Testes automatizados
 
 doctests:
+>>> import app.config as cg
 
 >>> criar_job()
 Arquivo Json com massa de dados salvo com sucesso!
@@ -11,7 +12,6 @@ Arquivo Json com massa de dados salvo com sucesso!
 >>> ler_jobs(None)
 O Caminho do arquivo deve ser do tipo string!
 
->>> import app.config as cg
 >>> listar_jobs(cg.arq_jobs_teste)
 Listando Jobs:
 Lendo Jobs...
@@ -143,7 +143,7 @@ def listar_jobs(arq_jobs):
 
                     output_esperado = output_esperado + str(linha_job[Job.campo.id])
                     conta_job = conta_job + 1
-            output_esperado = output_esperado + '], ' + config.enter
+            output_esperado = output_esperado + '],' + config.enter
     output_esperado = output_esperado + ']'
     print(output_esperado)
 
@@ -169,8 +169,13 @@ def limitar_jobs_max_8h(lista_jobs):
 
 if __name__ == "__main__":
     # Para Executar os Testes automatizados
-    #import doctest
-    #doctest.testmod()
+    import doctest
+    import config as cg
+    print('+++++++++++++++++++++++++++++++++++++++++++++')
+    print('Executando os Testes Automatizados Primeiro: ')
+    doctest.testmod(cg)
+    print('Fim dos Testes!')
+    print('+++++++++++++++++++++++++++++++++++++++++++++')
 
     # Rodar a aplicação
     listar_jobs(arq_jobs=config.arq_jobs)
